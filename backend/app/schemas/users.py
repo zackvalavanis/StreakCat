@@ -20,9 +20,9 @@ class UserResponse(UserBase):
 class UserCreate(UserBase):
   password: str
 
-class LoginRequest(BaseModal): 
+class LoginRequest(BaseModel): 
   email: str
   password: str
 
-class TokenResponse(Basemodel):
+class TokenResponse(BaseModel):
   token: str
