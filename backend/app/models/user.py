@@ -4,9 +4,6 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID 
 import uuid
 
-
-
-
 class User(Base): 
   __tablename__ = "users"
 
@@ -17,3 +14,5 @@ class User(Base):
   hashed_password=Column(String, nullable=False)
   created_at=Column(DateTime(timezone=True), server_default=func.now())
   updated_at=Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
+
+  tasks = relationship("Task", back_populates="user", cascade="all, delete-orphan")
