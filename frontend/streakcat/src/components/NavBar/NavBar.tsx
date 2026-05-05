@@ -1,7 +1,9 @@
+import { Link } from "react-router"
+
 export function NavBar() {
   return (
     <div>
-      <h1>Hi</h1>
+      <Link to='/login-page'>Login</Link>
     </div>
   )
 }
