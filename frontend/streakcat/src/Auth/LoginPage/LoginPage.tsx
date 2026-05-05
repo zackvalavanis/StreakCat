@@ -1,12 +1,14 @@
 import { useState } from "react"
 import type { LoginPage } from "../../Types/types"
 import { useNavigate } from "react-router"
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast'
+import { UseAuth } from "../../Context/UseAuth";
 
 
 export function LoginPage() {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const { login } = UseAuth()
   const [formData, setFormData] = useState<LoginPage>({
     email: "",
     password: ""
@@ -53,7 +55,7 @@ export function LoginPage() {
     }
   }
 
-  const submut = (e: React.FormEvent) => {
+  const submit = (e: React.FormEvent) => {
     e.preventDefault()
     HandleLogin(formData)
   }
@@ -62,10 +64,24 @@ export function LoginPage() {
   return (
     <div>
       <h1>Login</h1>
-      <form>
-        <input type='email' placeholder="email"></input>
-        <input type='password' placeholder='password'></input>
-        <button type='submit'>Login</button>
+      <form onSubmit={submit}>
+        <input
+          name="email"
+          type='email'
+          placeholder="email"
+          onChange={(e) =>
+            setFormData({ ...formData, email: e.target.value })}
+        >
+        </input>
+        <input
+          name="password"
+          type='password'
+          placeholder='password'
+          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+        >
+        </input>
+
+        <button type='submit' disabled={loading}>{loading ? "Logging in.." : "Login"}</button>
       </form>
     </div>
   )
