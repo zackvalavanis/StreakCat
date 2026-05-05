@@ -11,9 +11,14 @@ from app.utils.auth import hash_password, get_current_user
 
 router = APIRouter()
 
+@router.get('/tasks', response_model=List[TaskResponse])
+def get_all_tasks(db: Session=Depends(get_db)): 
+  tasks = db.query(Task).all()
+  return tasks
+
 @router.get('/tasks/me', response_model=List[TaskResponse])
 def get_my_tasks(user: User = Depends(get_current_user), db: Session=Depends(get_db)): 
-  tasks = db.query(Task).filter(Task.user_id == user.id).all
+  tasks = db.query(Task).filter(Task.user_id == user.id).all()
   return tasks
 
 
