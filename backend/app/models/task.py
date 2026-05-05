@@ -12,6 +12,7 @@ class Task(Base):
   task_name=Column(String, nullable=False)
   time_start=Column(DateTime(timezone=True), server_default=func.now())
   time_end=Column(DateTime(timezone=True))
+  
   user_id=Column(UUID(as_uuid=True), ForeignKey("users.id"))
 
   user = relationship('User', back_populates="tasks")
