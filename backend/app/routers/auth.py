@@ -5,7 +5,7 @@ from app.models.user import User
 from typing import List 
 from fastapi import APIRouter, Depends, HTTPException 
 from uuid import UUID
-from app.utils.auth import verify_password, create_access_token
+from app.utils.auth import verify_password, create_access_token, hash_password
 
 router = APIRouter()
 
@@ -31,10 +31,12 @@ def register(auth: UserCreate, db: Session=Depends(get_db)):
   if existing_user:
     raise HTTPException(status_code=400, detail="User already exists")
 
-  hashed_pw = hashed_password(auth.password)
+  hashed_pw = hash_password(auth.password)
 
   new_user = User (
     email=auth.email, 
+    first_name=auth.first_name, 
+    last_name=auth.last_name, 
     hashed_password=hashed_pw
   )
 
