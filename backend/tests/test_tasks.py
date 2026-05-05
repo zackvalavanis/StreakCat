@@ -16,6 +16,21 @@ def test_get_tasks():
   assert response.status_code == 200
   assert isinstance(response.json(), list)
 
+
+
+
+def test_get_task(): 
+  auth_response = client.post('/auth/login', json={ 
+    "email": "zack@email.com", 
+    "password": "beep"
+  })
+  token = auth_response.json()["access_token"]
+
+  response = client.get('/tasks/me/{id}', headers={
+    "Authorization": f"Bearer {token}"
+  })
+  
+
 def test_create_task(): 
   auth_response = client.post('/auth/login', json={
     "email": "zack@email.com", 

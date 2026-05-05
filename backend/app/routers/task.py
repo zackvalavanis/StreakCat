@@ -16,6 +16,13 @@ def get_my_tasks(user: User = Depends(get_current_user), db: Session=Depends(get
   tasks = db.query(Task).filter(Task.user_id == user.id).all()
   return tasks
 
+@router.get('/tasks/me/{id}', response_model=TaskResponse)
+def get_task(id: UUID, user: User = Depends(get_current_user), db: Session = Depends(get_db)): 
+  task = db.query(Task).filter(Task.user_id == user.id and Task.id == id).first()
+  if not task: 
+   raise HTTPException(status_code=404, details="Task not found")
+  return task
+
 @router.post('/tasks/me', response_model=TaskResponse)
 def create_task(task: TaskCreate, user: User=Depends(get_current_user), db: Session=Depends(get_db)): 
   new_task = Task(
