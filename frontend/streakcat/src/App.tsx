@@ -4,6 +4,7 @@ import { MainPage } from './screens/MainPage/MainPage'
 import { NavBar } from './components/NavBar/NavBar'
 import { Footer } from './components/Footer/Footer'
 import { LoginPage } from './Auth/LoginPage/LoginPage'
+import { AuthProvider } from './Context/AuthProvider'
 
 const router = createBrowserRouter([
   {
@@ -24,9 +25,9 @@ const router = createBrowserRouter([
 function App() {
 
   return (
-    <>
+    <AuthProvider>
       <RouterProvider router={router} />
-    </>
+    </AuthProvider>
   )
 }
 

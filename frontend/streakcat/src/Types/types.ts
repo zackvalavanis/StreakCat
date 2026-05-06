@@ -1,4 +1,8 @@
-
+export interface User {
+  token: string | null
+  first_name: string
+  last_name: string
+}
 
 export interface LoginPage {
   email: string
@@ -10,4 +14,6 @@ export interface AuthContextType {
   login: (token: string) => Promise<void>
   logout: () => void
   isLoading: boolean
+  user: User | null
 }
+
