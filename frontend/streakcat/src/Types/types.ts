@@ -1,3 +1,5 @@
+import type { DateInput } from "@fullcalendar/core/index.js"
+
 export interface User {
   token: string | null
   first_name: string
@@ -17,3 +19,8 @@ export interface AuthContextType {
   user: User | null
 }
 
+export interface Task {
+  task_name: string
+  time_start: DateInput
+  time_end: DateInput
+}
