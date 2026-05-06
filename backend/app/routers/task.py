@@ -29,6 +29,7 @@ def create_task(task: TaskCreate, user: User=Depends(get_current_user), db: Sess
     task_name=task.task_name, 
     time_start=task.time_start, 
     time_end=task.time_end,
+    date=task.date,
     user_id = user.id
   )
   db.add(new_task)

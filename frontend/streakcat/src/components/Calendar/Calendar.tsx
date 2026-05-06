@@ -10,9 +10,6 @@ export function Calendar() {
 
 
   const HandleFetchTasks = async () => {
-    const access_token = localStorage.getItem('access_token')
-    console.log("Access token", access_token)
-
     const token = localStorage.getItem('access_token')
     try {
       const res = await fetch('http://localhost:8000/tasks/me', {
@@ -35,8 +32,8 @@ export function Calendar() {
   const events =
     tasks.map((t: Task) => ({
       title: t.task_name,
-      start: t.time_start,
-      end: t.time_end
+      date: t.time_start,
+      // end: t.time_end
     }))
 
 

@@ -11,6 +11,7 @@ class TaskResponse(BaseModel):
   task_name: str
   time_start: datetime
   time_end: datetime
+  date: datetime | None = None
 
   class Config:
     from_attributes = True
