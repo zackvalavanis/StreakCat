@@ -13,6 +13,7 @@ export function LoginPage() {
     email: "",
     password: ""
   })
+  const [showPassword, setShowPassword] = useState(false)
 
 
   const HandleLogin = async (formData: LoginPage) => {
@@ -60,7 +61,6 @@ export function LoginPage() {
     HandleLogin(formData)
   }
 
-
   return (
     <div>
       <h1>Login</h1>
@@ -75,11 +75,13 @@ export function LoginPage() {
         </input>
         <input
           name="password"
-          type='password'
+          id="passwordField"
+          type={showPassword ? 'text' : 'password'}
           placeholder='password'
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
         >
         </input>
+        <button type='button' onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</button>
 
         <button type='submit' disabled={loading}>{loading ? "Logging in.." : "Login"}</button>
       </form>

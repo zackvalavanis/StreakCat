@@ -5,6 +5,8 @@ import { NavBar } from './components/NavBar/NavBar'
 import { Footer } from './components/Footer/Footer'
 import { LoginPage } from './Auth/LoginPage/LoginPage'
 import { AuthProvider } from './Context/AuthProvider'
+import { Toaster } from 'react-hot-toast'
+import { ProfilePage } from './screens/ProfilePage/ProfilePage'
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <MainPage /> },
       { path: '/login-page', element: <LoginPage /> },
+      { path: '/profile', element: <ProfilePage /> }
     ]
   }
 ])
@@ -27,6 +30,7 @@ function App() {
   return (
     <AuthProvider>
       <RouterProvider router={router} />
+      <Toaster />
     </AuthProvider>
   )
 }
