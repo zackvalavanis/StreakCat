@@ -8,23 +8,25 @@ import type { Task } from '../../Types/types'
 export function Calendar() {
   const [tasks, setTasks] = useState<Task[]>([])
 
-
-  const HandleFetchTasks = async () => {
-    const token = localStorage.getItem('access_token')
-    try {
-      const res = await fetch('http://localhost:8000/tasks/me', {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      })
-      const data = await res.json()
-      setTasks(data)
-    } catch (error) {
-      console.error('Error', error)
-    }
-  }
-
   useEffect(() => {
+    const HandleFetchTasks = async () => {
+      const token = localStorage.getItem('access_token')
+      try {
+        const res = await fetch('http://localhost:8000/tasks/me', {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        })
+        const data = await res.json()
+        if (res.ok && Array.isArray(data)) {
+          setTasks(data)
+        } else {
+          console.error("Failed to fetch tasks", data)
+        }
+      } catch (error) {
+        console.error('Error', error)
+      }
+    }
     HandleFetchTasks()
   }, [])
 

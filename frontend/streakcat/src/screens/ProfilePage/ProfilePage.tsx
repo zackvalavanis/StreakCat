@@ -1,4 +1,4 @@
-import { UseAuth } from "../../Context/UseAuth"
+import { UseAuth } from "../../Auth/UseAuth"
 import { Calendar } from "../../components/Calendar/Calendar"
 
 export function ProfilePage() {

@@ -2,7 +2,8 @@ import { useState } from "react"
 import type { LoginPage } from "../../Types/types"
 import { useNavigate } from "react-router"
 import toast from 'react-hot-toast'
-import { UseAuth } from "../../Context/UseAuth";
+import { UseAuth } from "../../Auth/UseAuth"
+import './LoginPage.css'
 
 
 export function LoginPage() {
@@ -47,7 +48,7 @@ export function LoginPage() {
       login(data.access_token)
 
       toast.success("Logged in successfully")
-      navigate('/')
+      navigate('/profile')
     } catch (error) {
       console.error(error)
       toast.error("Server error. Try Again.")
@@ -62,7 +63,7 @@ export function LoginPage() {
   }
 
   return (
-    <div>
+    <div className='form'>
       <h1>Login</h1>
       <form onSubmit={submit}>
         <input
