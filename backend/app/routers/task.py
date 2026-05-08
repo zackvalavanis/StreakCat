@@ -18,7 +18,7 @@ def get_my_tasks(user: User = Depends(get_current_user), db: Session=Depends(get
 
 @router.get('/tasks/me/{id}', response_model=TaskResponse)
 def get_task(id: UUID, user: User = Depends(get_current_user), db: Session = Depends(get_db)): 
-  task = db.query(Task).filter(Task.user_id == user.id and Task.id == id).first()
+  task = db.query(Task).filter(Task.user_id == user.id, Task.id == id).first()
   if not task: 
    raise HTTPException(status_code=404, details="Task not found")
   return task
@@ -37,6 +37,20 @@ def create_task(task: TaskCreate, user: User=Depends(get_current_user), db: Sess
   db.refresh(new_task)
   return new_task
 
+@router.patch('/tasks/me/{id}', response_model=TaskResponse)
+def update_task(task: TaskCreate, id: UUID, user: User=Depends(get_current_user), db: Session=Depends(get_db)): 
+  db_task = db.query(Task).filter(Task.user_id == user.id, Task.id == id).first()
+  if not db_task: 
+    return{"error": "Task not found"}
+  db_task.task_name = task.task_name
+  db_task.time_start = task.time_start
+  db_task.time_end = task.time_end
+  db_task.date = task.date
+
+  db.commit()
+  db.refresh(db_task)
+  return db_task
+  
 @router.delete('/tasks/me/{id}')
 def delete_task(id: str, user: User=Depends(get_current_user), db: Session=Depends(get_db)): 
   task_d = db.query(Task).filter(Task.user_id == user.id and Task.id == id).first()
