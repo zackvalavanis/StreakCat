@@ -19,6 +19,7 @@ export function Calendar() {
   const [selectedDate, setSelectedDate] = useState<SelectedDate | null>(null)
   const [isDayModalShowing, setIsDayModalShowing] = useState(false)
 
+
   useEffect(() => {
     const HandleFetchTasks = async () => {
       const token = localStorage.getItem('access_token')
@@ -106,7 +107,7 @@ export function Calendar() {
     setIsDayModalShowing(true)
   }
 
-  const handleAddTask = async (task: Task) => {
+  const handleAddTask = async (task: { task_name: string; time_start: string; time_end: string; date: string }) => {
     const token = localStorage.getItem('access_token')
     try {
       const res = await fetch('http://localhost:8000/tasks/me', {

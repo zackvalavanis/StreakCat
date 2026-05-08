@@ -15,9 +15,9 @@ export function DayModal({ show, onClose, onSubmit, date }: DayModalProps) {
     if (!taskName.trim()) return
     onSubmit({
       task_name: taskName,
-      time_start: `${date}T${timeStart}:00Z`,
-      time_end: `${date}T${timeEnd}:00Z`,
-      date: `${date}T${timeStart}:00Z`,
+      time_start: `${date}T${timeStart}:00`,
+      time_end: `${date}T${timeEnd}:00`,
+      date: `${date}T${timeStart}:00`,
     })
     setTaskName('')
     setTimeStart('09:00')
