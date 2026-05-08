@@ -84,9 +84,9 @@ export function Calendar() {
 // a custom render function
 function renderEventContent(eventInfo) {
   return (
-    <>
+    <div className='events'>
       <b>{eventInfo.timeText}</b>
       <i>{eventInfo.event.title}</i>
-    </>
+    </div>
   )
 }
