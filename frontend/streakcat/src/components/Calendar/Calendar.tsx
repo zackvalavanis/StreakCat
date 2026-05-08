@@ -7,13 +7,17 @@ import { ModalCalendar } from './ModalCalendar'
 import type { SelectedEvent } from '../../Types/types'
 import type { EventClickArg } from '@fullcalendar/core'
 import './Calendar.css'
-
+import { DayModal } from './DayModal'
+import type { SelectedDate } from '../../Types/types'
+import type { DateClickArg } from '@fullcalendar/interaction'
 
 
 export function Calendar() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [isModalShowing, setIsModalShowing] = useState(false)
   const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
+  const [selectedDate, setSelectedDate] = useState<SelectedDate | null>(null)
+  const [isDayModalShowing, setIsDayModalShowing] = useState(false)
 
   useEffect(() => {
     const HandleFetchTasks = async () => {
@@ -63,11 +67,19 @@ export function Calendar() {
     setSelectedEvent(null)
   }
 
+  const handleDayModalClose = () => {
+    console.log('clicked')
+    setIsDayModalShowing(false)
+    setSelectedDate(null)
+  }
+
+
+
   const handleDeleteEvent = async (id: string) => {
     const token = localStorage.getItem('access_token')
     try {
       const res = await fetch(`http://localhost:8000/tasks/me/${id}`, {
-        'method': 'DELETE',
+        method: 'DELETE',
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -85,10 +97,44 @@ export function Calendar() {
     }
   }
 
+  const handleDateClick = (info: DateClickArg) => {
+    setSelectedDate({
+      id: "",
+      title: "",
+      date: info.dateStr
+    })
+    setIsDayModalShowing(true)
+  }
+
+  const handleAddTask = async (task: Task) => {
+    const token = localStorage.getItem('access_token')
+    try {
+      const res = await fetch('http://localhost:8000/tasks/me', {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(task)
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setTasks(prev => [...prev, data])
+        setIsDayModalShowing(false)
+        setSelectedDate(null)
+      } else {
+        console.log("Failed to create task.")
+      }
+    } catch (error) {
+      console.error("error creating task", error)
+    }
+  }
+
+
+
   return (
     <div>
       <FullCalendar
-
         height="70vh"
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView='dayGridMonth'
@@ -96,9 +142,11 @@ export function Calendar() {
         events={events}
         eventContent={renderEventContent}
         eventClick={handleEventClick}
+        dateClick={handleDateClick}
       />
       <ModalCalendar onDelete={handleDeleteEvent} onClose={handleModalClose} show={isModalShowing} info={selectedEvent}>
       </ModalCalendar>
+      <DayModal show={isDayModalShowing} onClose={handleDayModalClose} onSubmit={handleAddTask} date={selectedDate?.date ?? ""}></DayModal>
     </div>
   )
 }

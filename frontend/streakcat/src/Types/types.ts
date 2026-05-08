@@ -37,7 +37,21 @@ export type ModalCalendarProps = {
   } | null
 }
 
+export interface DayModalProps {
+  show: boolean
+  onClose: () => void
+  onSubmit: (task_name: string, time_start: string, time_end: string, date: string) => void
+  date: string
+}
+
+
 export type SelectedEvent = {
+  id: string
+  title: string
+  date: Date | null
+}
+
+export type SelectedDate = {
   id: string
   title: string
   date: Date | null
