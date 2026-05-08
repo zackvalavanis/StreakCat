@@ -2,7 +2,7 @@ import type { ModalCalendarProps } from "../../Types/types"
 import { createPortal } from 'react-dom'
 import './ModalCalendar.css'
 
-export function ModalCalendar({ info, show, onClose }: ModalCalendarProps) {
+export function ModalCalendar({ info, show, onClose, onDelete }: ModalCalendarProps) {
   if (!show || !info) {
     return null;
   }
@@ -33,6 +33,7 @@ export function ModalCalendar({ info, show, onClose }: ModalCalendarProps) {
         <p>{configure_date}</p>
         <p>{time} {cleaned_time_zone(time_zone_cleaned)}</p>
         <button className='close-btn' onClick={onClose}>X</button>
+        <button className='delete-btn' onClick={() => onDelete(info.id)}>Delete</button>
       </div>
     </div>,
     document.body

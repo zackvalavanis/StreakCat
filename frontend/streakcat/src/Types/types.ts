@@ -29,6 +29,7 @@ export interface Task {
 export type ModalCalendarProps = {
   show: boolean
   onClose: () => void
+  onDelete: (id: string) => void
   info: {
     id: string
     title: string

@@ -63,6 +63,28 @@ export function Calendar() {
     setSelectedEvent(null)
   }
 
+  const handleDeleteEvent = async (id: string) => {
+    const token = localStorage.getItem('access_token')
+    try {
+      const res = await fetch(`http://localhost:8000/tasks/me/${id}`, {
+        'method': 'DELETE',
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        console.log("Not able to delete", data)
+        return;
+      }
+
+      setTasks(prev => prev.filter(task => String(task.id) != id))
+      setIsModalShowing(false)
+    } catch (error) {
+      console.error('Error deleting account', error)
+    }
+  }
+
   return (
     <div>
       <FullCalendar
@@ -75,7 +97,7 @@ export function Calendar() {
         eventContent={renderEventContent}
         eventClick={handleEventClick}
       />
-      <ModalCalendar onClose={handleModalClose} show={isModalShowing} info={selectedEvent}>
+      <ModalCalendar onDelete={handleDeleteEvent} onClose={handleModalClose} show={isModalShowing} info={selectedEvent}>
       </ModalCalendar>
     </div>
   )
