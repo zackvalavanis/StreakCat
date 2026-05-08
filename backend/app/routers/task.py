@@ -36,3 +36,13 @@ def create_task(task: TaskCreate, user: User=Depends(get_current_user), db: Sess
   db.commit()
   db.refresh(new_task)
   return new_task
+
+@router.delete('/tasks/me/{id}')
+def delete_task(id: str, user: User=Depends(get_current_user), db: Session=Depends(get_db)): 
+  task_d = db.query(Task).filter(Task.user_id == user.id and Task.id == id).first()
+  if not task_d: 
+    return {"error", "Task not deleted"}
+
+  db.delete(task_d)
+  db.commit()
+  return {"Message": "Task deleted successfully"}

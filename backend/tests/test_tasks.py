@@ -17,8 +17,6 @@ def test_get_tasks():
   assert isinstance(response.json(), list)
 
 
-
-
 def test_get_task(): 
   auth_response = client.post('/auth/login', json={ 
     "email": "zack@email.com", 
@@ -29,15 +27,13 @@ def test_get_task():
   response = client.get('/tasks/me/{id}', headers={
     "Authorization": f"Bearer {token}"
   })
-  
+
 
 def test_create_task(): 
   auth_response = client.post('/auth/login', json={
     "email": "zack@email.com", 
     "password": "beep"
   })
-  print(auth_response.status_code)
-  print(auth_response.json())
   token = auth_response.json()["access_token"]
 
   response = client.post('/tasks/me', json={
@@ -51,3 +47,22 @@ def test_create_task():
   assert response.status_code==200
   data = response.json()
   assert data["task_name"] == "Painting"
+
+def test_delete_task(): 
+  auth_response = client.post('/auth/login', json={
+    "email": "zack@email.com", 
+    "password": "beep"
+  })
+  token = auth_response.json()["access_token"]
+
+  headers = { 
+    "Authorization": f"Bearer {token}"
+  }
+  tasks_response = client.get('/tasks/me', headers=headers)
+  tasks = tasks_response.json()
+
+  task_id = tasks[0]["id"]
+
+  response = client.delete(f'/tasks/me/{task_id}', headers=headers)
+
+  assert response.status_code == 200

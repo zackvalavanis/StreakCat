@@ -20,5 +20,6 @@ class TaskCreate(BaseModel):
   task_name: str
   time_start: datetime
   time_end: datetime
+  date: datetime | None = None
 
 
