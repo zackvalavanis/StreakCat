@@ -20,7 +20,24 @@ export interface AuthContextType {
 }
 
 export interface Task {
+  id: number
   task_name: string
   time_start: DateInput
   time_end: DateInput
+}
+
+export type ModalCalendarProps = {
+  show: boolean
+  onClose: () => void
+  info: {
+    id: string
+    title: string
+    date: Date | null
+  } | null
+}
+
+export type SelectedEvent = {
+  id: string
+  title: string
+  date: Date | null
 }

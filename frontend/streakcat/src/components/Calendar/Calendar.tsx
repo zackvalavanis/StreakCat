@@ -2,11 +2,18 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import { useEffect, useState } from 'react'
 import type { Task } from '../../Types/types'
+import interactionPlugin from "@fullcalendar/interaction"
+import { ModalCalendar } from './ModalCalendar'
+import type { SelectedEvent } from '../../Types/types'
+import type { EventClickArg } from '@fullcalendar/core'
+import './Calendar.css'
 
 
 
 export function Calendar() {
   const [tasks, setTasks] = useState<Task[]>([])
+  const [isModalShowing, setIsModalShowing] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
 
   useEffect(() => {
     const HandleFetchTasks = async () => {
@@ -33,21 +40,43 @@ export function Calendar() {
 
   const events =
     tasks.map((t: Task) => ({
+      id: String(t.id),
       title: t.task_name,
       date: t.time_start,
       // end: t.time_end
     }))
 
 
+  const handleEventClick = (info: EventClickArg) => {
+    console.log("event showing here.", info.event.id)
+
+    setSelectedEvent({
+      id: info.event.id,
+      title: info.event.title,
+      date: info.event.start
+    })
+    setIsModalShowing(true)
+  }
+
+  const handleModalClose = () => {
+    setIsModalShowing(false)
+    setSelectedEvent(null)
+  }
+
   return (
     <div>
       <FullCalendar
-        plugins={[dayGridPlugin]}
+
+        height="70vh"
+        plugins={[dayGridPlugin, interactionPlugin]}
         initialView='dayGridMonth'
-        weekends={false}
+        weekends={true}
         events={events}
         eventContent={renderEventContent}
+        eventClick={handleEventClick}
       />
+      <ModalCalendar onClose={handleModalClose} show={isModalShowing} info={selectedEvent}>
+      </ModalCalendar>
     </div>
   )
 }

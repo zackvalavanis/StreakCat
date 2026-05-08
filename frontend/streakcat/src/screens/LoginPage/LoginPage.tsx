@@ -63,9 +63,9 @@ export function LoginPage() {
   }
 
   return (
-    <div className='form'>
+    <div className='login-page'>
       <h1>Login</h1>
-      <form onSubmit={submit}>
+      <form className='form' onSubmit={submit}>
         <input
           name="email"
           type='email'
@@ -82,7 +82,7 @@ export function LoginPage() {
           onChange={(e) => setFormData({ ...formData, password: e.target.value })}
         >
         </input>
-        <button type='button' onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show"}</button>
+        <button type='button' onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show Password"}</button>
 
         <button type='submit' disabled={loading}>{loading ? "Logging in.." : "Login"}</button>
       </form>
