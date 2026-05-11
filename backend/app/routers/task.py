@@ -37,7 +37,7 @@ def create_task(task: TaskCreate, user: User=Depends(get_current_user), db: Sess
   db.refresh(new_task)
   return new_task
 
-@router.patch('/tasks/me/{id}', response_model=TaskResponse)
+@router.put('/tasks/me/{id}', response_model=TaskResponse)
 def update_task(task: TaskCreate, id: UUID, user: User=Depends(get_current_user), db: Session=Depends(get_db)): 
   db_task = db.query(Task).filter(Task.user_id == user.id, Task.id == id).first()
   if not db_task: 

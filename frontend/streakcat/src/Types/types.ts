@@ -30,6 +30,7 @@ export type ModalCalendarProps = {
   show: boolean
   onClose: () => void
   onDelete: (id: string) => void
+  onUpdate: (task: { id: string, task_name: string; time_start: string; time_end: string; date: string }) => void
   info: {
     id: string
     title: string

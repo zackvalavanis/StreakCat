@@ -12,7 +12,8 @@
   "dependencies": {
     "@fullcalendar/interaction": "^6.1.20",
     "react": "^19.2.5",
-    "react-dom": "^19.2.5"
+    "react-dom": "^19.2.5",
+    "react-router": "^7.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",

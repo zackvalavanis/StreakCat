@@ -1,5 +1,6 @@
 import type { DayModalProps } from "../../Types/types"
 import { useState } from "react"
+import './DayModal.css'
 
 export function DayModal({ show, onClose, onSubmit, date }: DayModalProps) {
   const [taskName, setTaskName] = useState('')
@@ -26,14 +27,14 @@ export function DayModal({ show, onClose, onSubmit, date }: DayModalProps) {
 
 
   return (
-    <div className='modal-overlay' onClick={onClose}>
-      <div className='modal-content' onClick={(e) => e.stopPropagation()}>
+    <div className='modal-overlay-day' onClick={onClose}>
+      <div className='modal-content-day' onClick={(e) => e.stopPropagation()}>
         <form onSubmit={handleSubmit}>
           <input onChange={(e) => setTaskName(e.target.value)} value={taskName} placeholder="Task"></input>
           <input type='time' onChange={(e) => setTimeStart(e.target.value)} value={timeStart} placeholder="start time"></input>
           <input type='time' onChange={(e) => setTimeEnd(e.target.value)} value={timeEnd} placeholder='end time'></input>
           <input type='date' value={date} placeholder="date" readOnly></input>
-          <button>Add to Calendar</button>
+          <button className='add-btn'>Add Task</button>
         </form>
         <button className='close-btn' onClick={onClose}>X</button>
       </div>

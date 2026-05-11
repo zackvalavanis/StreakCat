@@ -131,6 +131,32 @@ export function Calendar() {
     }
   }
 
+  const handleUpdateTask = async (task: { id: string, task_name: string; time_start: string; time_end: string; date: string }) => {
+    const token = localStorage.getItem('access_token')
+    const { id, ...body } = task
+    console.log(body)
+    try {
+      const res = await fetch(`http://localhost:8000/tasks/me/${id}`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setTasks(prev => prev.map(task => String(task.id) === String(data.id) ? data : task))
+        setIsModalShowing(false)
+        setSelectedDate(null)
+      } else {
+        console.log("Failed to update Task.")
+      }
+    } catch (error) {
+      console.error("error updating task", error)
+    }
+  }
+
 
 
   return (
@@ -145,7 +171,7 @@ export function Calendar() {
         eventClick={handleEventClick}
         dateClick={handleDateClick}
       />
-      <ModalCalendar onDelete={handleDeleteEvent} onClose={handleModalClose} show={isModalShowing} info={selectedEvent}>
+      <ModalCalendar onDelete={handleDeleteEvent} onClose={handleModalClose} show={isModalShowing} info={selectedEvent} onUpdate={handleUpdateTask}>
       </ModalCalendar>
       <DayModal show={isDayModalShowing} onClose={handleDayModalClose} onSubmit={handleAddTask} date={selectedDate?.date ?? ""}></DayModal>
     </div>
