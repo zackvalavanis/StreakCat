@@ -10,6 +10,7 @@ import './Calendar.css'
 import { DayModal } from './DayModal'
 import type { SelectedDate } from '../../Types/types'
 import type { DateClickArg } from '@fullcalendar/interaction'
+import { Cat } from '../Cat/Cat'
 
 
 export function Calendar() {
@@ -48,17 +49,20 @@ export function Calendar() {
       id: String(t.id),
       title: t.task_name,
       date: t.time_start,
+      completed: t.completed
       // end: t.time_end
     }))
 
+  console.log(events)
 
   const handleEventClick = (info: EventClickArg) => {
     console.log("event showing here.", info.event.id)
-
+    const task = tasks.find(t => String(t.id) === info.event.id)
     setSelectedEvent({
       id: info.event.id,
       title: info.event.title,
-      date: info.event.start
+      date: info.event.start,
+      completed: task?.completed ?? false
     })
     setIsModalShowing(true)
   }
@@ -102,12 +106,13 @@ export function Calendar() {
     setSelectedDate({
       id: "",
       title: "",
-      date: info.dateStr
+      date: info.dateStr,
+      completed: false
     })
     setIsDayModalShowing(true)
   }
 
-  const handleAddTask = async (task: { task_name: string; time_start: string; time_end: string; date: string }) => {
+  const handleAddTask = async (task: { task_name: string; time_start: string; time_end: string; date: string, completed: boolean }) => {
     const token = localStorage.getItem('access_token')
     try {
       const res = await fetch('http://localhost:8000/tasks/me', {
@@ -131,7 +136,7 @@ export function Calendar() {
     }
   }
 
-  const handleUpdateTask = async (task: { id: string, task_name: string; time_start: string; time_end: string; date: string }) => {
+  const handleUpdateTask = async (task: { id: string, task_name: string; time_start: string; time_end: string; date: string, completed: boolean }) => {
     const token = localStorage.getItem('access_token')
     const { id, ...body } = task
     console.log(body)
@@ -161,6 +166,7 @@ export function Calendar() {
 
   return (
     <div>
+      <Cat events={events} />
       <FullCalendar
         height="70vh"
         plugins={[dayGridPlugin, interactionPlugin]}

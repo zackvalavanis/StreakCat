@@ -30,6 +30,7 @@ def create_task(task: TaskCreate, user: User=Depends(get_current_user), db: Sess
     time_start=task.time_start, 
     time_end=task.time_end,
     date=task.date,
+    completed=task.completed, 
     user_id = user.id
   )
   db.add(new_task)
@@ -46,6 +47,7 @@ def update_task(task: TaskCreate, id: UUID, user: User=Depends(get_current_user)
   db_task.time_start = task.time_start
   db_task.time_end = task.time_end
   db_task.date = task.date
+  db_task.completed = task.completed
 
   db.commit()
   db.refresh(db_task)

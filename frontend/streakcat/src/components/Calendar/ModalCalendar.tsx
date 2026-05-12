@@ -8,6 +8,7 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
   const [taskName, setTaskName] = useState('')
   const [timeStart, setTimeStart] = useState('09:00')
   const [timeEnd, setTimeEnd] = useState('10:00')
+  const [completed, setCompleted] = useState(false)
 
   if (!show || !info) {
     return null;
@@ -36,6 +37,7 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
 
   const handleEdit = () => {
     setTaskName(info.title)
+    setCompleted(info.completed ?? false)
     console.log('editing')
     setIsEditing(true)
   }
@@ -54,6 +56,11 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
             <input type='time' onChange={(e) => setTimeStart(e.target.value)} value={timeStart} placeholder="start time"></input>
             <input type='time' onChange={(e) => setTimeEnd(e.target.value)} value={timeEnd} placeholder='end time'></input>
             <input type='date' value={time} placeholder="date" readOnly></input>
+            <input
+              type='checkbox'
+              checked={completed}
+              onChange={(e) => setCompleted(e.target.checked)}>
+            </input>
             <button className='close-btn' onClick={handleClose}>X</button>
             <button onClick={() => onUpdate({
               id: info.id,
@@ -61,6 +68,7 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
               time_start: `${isoDate}T${timeStart}:00`,
               time_end: `${isoDate}T${timeEnd}:00`,
               date: `${isoDate}T${timeStart}:00`,
+              completed: completed
             })}
             >Update
             </button>

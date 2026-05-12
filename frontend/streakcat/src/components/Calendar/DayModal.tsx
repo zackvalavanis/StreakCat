@@ -6,6 +6,7 @@ export function DayModal({ show, onClose, onSubmit, date }: DayModalProps) {
   const [taskName, setTaskName] = useState('')
   const [timeStart, setTimeStart] = useState('09:00')
   const [timeEnd, setTimeEnd] = useState('10:00')
+  const [complete, setCompleted] = useState(false)
   const offsetminutes = new Date(`${date}T${timeStart}:00`).getTimezoneOffset()
   const sign = offsetminutes <= 0 ? '+' : '-';
   const absMinutes = Math.abs(offsetminutes)
@@ -26,10 +27,12 @@ export function DayModal({ show, onClose, onSubmit, date }: DayModalProps) {
       time_start: `${date}T${timeStart}:00${tzOffset}`,
       time_end: `${date}T${timeEnd}:00${tzOffset}`,
       date: `${date}T${timeStart}:00${tzOffset}`,
+      completed: complete
     })
     setTaskName('')
     setTimeStart('09:00')
     setTimeEnd('10:00')
+    setCompleted(false)
   }
 
 
