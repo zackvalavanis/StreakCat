@@ -1,3 +1,7 @@
+.calendar-page {
+  margin-bottom: 30px;
+}
+
 .fc {
   position: relative;
   z-index: 1;

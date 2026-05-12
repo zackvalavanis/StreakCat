@@ -64,7 +64,6 @@ export function LoginPage() {
 
   return (
     <div className='login-page'>
-      <h1>Login</h1>
       <form className='form' onSubmit={submit}>
         <input
           name="email"

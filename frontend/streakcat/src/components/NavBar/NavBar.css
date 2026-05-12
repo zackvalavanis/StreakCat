@@ -2,9 +2,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 200px;
+  background-color: black;
 }
 
 .nav-bar-links {
   display: flex;
-  gap: 20px;
+  font-size: 25px;
+  gap: 150px;
+  color: white;
+}
+
+.link1:hover,
+.link2:hover,
+.link3:hover,
+.link4:hover {
+  transform: scale(1.05);
 }

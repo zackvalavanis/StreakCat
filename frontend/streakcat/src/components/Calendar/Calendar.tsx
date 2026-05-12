@@ -165,7 +165,7 @@ export function Calendar() {
 
 
   return (
-    <div>
+    <div className='calendar-page'>
       <Cat events={events} />
       <FullCalendar
         height="70vh"

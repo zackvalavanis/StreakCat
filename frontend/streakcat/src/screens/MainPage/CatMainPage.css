@@ -1,0 +1,160 @@
+@keyframes walk-across {
+  0% {
+    transform: translateX(-100px) scaleX(1);
+  }
+
+  48% {
+    transform: translateX(calc(100vw - 40px)) scaleX(1);
+  }
+
+  50% {
+    transform: translateX(calc(100vw - 40px)) scaleX(-1);
+  }
+
+  98% {
+    transform: translateX(-100px) scaleX(-1);
+  }
+
+  100% {
+    transform: translateX(-100px) scaleX(1);
+  }
+}
+
+@keyframes leg-front-left-walk {
+
+  0%,
+  100% {
+    transform: rotate(-15deg);
+  }
+
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+@keyframes leg-front-right-walk {
+
+  0%,
+  100% {
+    transform: rotate(15deg);
+  }
+
+  50% {
+    transform: rotate(-15deg);
+  }
+}
+
+@keyframes leg-back-left-walk {
+
+  0%,
+  100% {
+    transform: rotate(12deg);
+  }
+
+  50% {
+    transform: rotate(-12deg);
+  }
+}
+
+@keyframes leg-back-right-walk {
+
+  0%,
+  100% {
+    transform: rotate(-12deg);
+  }
+
+  50% {
+    transform: rotate(12deg);
+  }
+}
+
+@keyframes tail-sway-walk {
+
+  0%,
+  100% {
+    transform: rotate(-10deg);
+  }
+
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+@keyframes body-bob-walk {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  25% {
+    transform: translateY(-2px);
+  }
+
+  75% {
+    transform: translateY(1px);
+  }
+}
+
+@keyframes ear-wiggle-walk {
+
+  0%,
+  80%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  85% {
+    transform: rotate(-6deg);
+  }
+
+  92% {
+    transform: rotate(4deg);
+  }
+}
+
+.walking-cat-area {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.walk-container {
+  animation: walk-across 12s linear infinite;
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+}
+
+.tail-sway-walk {
+  animation: tail-sway-walk 0.4s ease-in-out infinite;
+}
+
+.body-bob-walk {
+  animation: body-bob-walk 0.4s ease-in-out infinite;
+}
+
+.leg-back-left {
+  animation: leg-back-left-walk 0.4s ease-in-out infinite;
+}
+
+.leg-back-right {
+  animation: leg-back-right-walk 0.4s ease-in-out infinite;
+}
+
+.leg-front-left {
+  animation: leg-front-left-walk 0.4s ease-in-out infinite;
+}
+
+.leg-front-right {
+  animation: leg-front-right-walk 0.4s ease-in-out infinite;
+}
+
+.ear-wiggle-walk {
+  animation: ear-wiggle-walk 3s ease infinite;
+}

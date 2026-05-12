@@ -12,14 +12,14 @@ export function NavBar() {
   return (
     <div className='nav-bar'>
       <div className='nav-bar-links'>
-        <Link to='/'>Home</Link>
+        <Link className='link4' to='/'>Home</Link>
         {user ? (
           <div className='nav-bar-links'>
-            <Link to='/profile'>Profile</Link>
-            <Link to="/" onClick={handleLogout}>Logout</Link>
+            <Link className='link1' to='/profile'>Profile</Link>
+            <Link className='link2' to="/" onClick={handleLogout}>Logout</Link>
           </div>
         ) : (
-          <Link to='/login-page'>Login</Link>
+          <Link className='link3' to='/login-page'>Login</Link>
         )}
       </div>
 
