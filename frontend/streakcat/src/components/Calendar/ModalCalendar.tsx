@@ -1,7 +1,7 @@
 import type { ModalCalendarProps } from "../../Types/types"
 import { createPortal } from 'react-dom'
 import './ModalCalendar.css'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: ModalCalendarProps) {
   const [isEditing, setIsEditing] = useState(false)
@@ -10,13 +10,29 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
   const [timeEnd, setTimeEnd] = useState('10:00')
   const [completed, setCompleted] = useState(false)
 
+  useEffect(() => {
+    if (info) {
+      setTaskName(info.title)
+      setCompleted(info.completed ?? false)
+      setIsEditing(false)
+    }
+  }, [info])
+
   if (!show || !info) {
     return null;
   }
 
   const configure_date = info.date?.toString().split(' ').slice(0, 4).join(' ')
-  const isoDate = info.date?.toISOString().split('T')[0]  // add it here
+  const isoDate = info.date?.toISOString().split('T')[0]
   const time = info.date?.toString().split(' ').slice(4, 5).join(' ')
+
+  const offsetMinutes = new Date(`${isoDate}T${timeStart}:00`).getTimezoneOffset()
+  const sign = offsetMinutes <= 0 ? '+' : '-'
+  const absMinutes = Math.abs(offsetMinutes)
+  const hours = String(Math.floor(absMinutes / 60)).padStart(2, '0')
+  const minutes = String(absMinutes % 60).padStart(2, '0')
+  const tzOffset = `${sign}${hours}:${minutes}`
+
   const time_zone = info.date?.toString().split(' ').slice(6).join(' ')
   const time_zone_cleaned = time_zone
     .split(' ')
@@ -37,6 +53,10 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
 
   const handleEdit = () => {
     setTaskName(info.title)
+    const start = new Date(info.time_start)
+    const end = new Date(info.time_end)
+    setTimeStart(`${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}`)
+    setTimeEnd(`${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}`)
     setCompleted(info.completed ?? false)
     console.log('editing')
     setIsEditing(true)
@@ -44,6 +64,10 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
 
   const handleClose = () => {
     setIsEditing(false)
+    setTaskName('')
+    setTimeStart('09:00')
+    setTimeEnd('10:00')
+    setCompleted(false)
     onClose()
   }
 
@@ -65,9 +89,9 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
             <button onClick={() => onUpdate({
               id: info.id,
               task_name: taskName,
-              time_start: `${isoDate}T${timeStart}:00`,
-              time_end: `${isoDate}T${timeEnd}:00`,
-              date: `${isoDate}T${timeStart}:00`,
+              time_start: `${isoDate}T${timeStart}:00${tzOffset}`,
+              time_end: `${isoDate}T${timeEnd}:00${tzOffset}`,
+              date: `${isoDate}T${timeStart}:00${tzOffset}`,
               completed: completed
             })}
             >Update

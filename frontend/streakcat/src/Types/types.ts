@@ -37,6 +37,8 @@ export type ModalCalendarProps = {
     title: string
     date: Date | null
     completed: boolean
+    time_start: string
+    time_end: string
   } | null
 
 }
@@ -53,6 +55,8 @@ export type SelectedEvent = {
   title: string
   date: Date | null
   completed: boolean
+  time_start: string
+  time_end: string
 }
 
 export type SelectedDate = {

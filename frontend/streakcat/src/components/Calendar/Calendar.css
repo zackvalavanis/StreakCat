@@ -8,6 +8,16 @@
   cursor: crosshair
 }
 
+.fc .fc-daygrid-day-events {
+  max-height: 130px;
+  overflow-y: auto;
+}
+
+.fc .fc-daygrid-event {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
 .events {
   cursor: pointer;
 }

@@ -1,10 +1,11 @@
 import { CatMainPage } from "./CatMainPage"
+import './MainPage.css'
 
 export function MainPage() {
 
 
   return (
-    <div>
+    <div className='main-page'>
       <CatMainPage />
 
       <h1>

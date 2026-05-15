@@ -62,7 +62,10 @@ export function Calendar() {
       id: info.event.id,
       title: info.event.title,
       date: info.event.start,
-      completed: task?.completed ?? false
+      completed: task?.completed ?? false,
+      time_start: String(task?.time_start ?? ''),
+      time_end: String(task?.time_end ?? '')
+
     })
     setIsModalShowing(true)
   }
@@ -107,7 +110,7 @@ export function Calendar() {
       id: "",
       title: "",
       date: info.dateStr,
-      completed: false
+      completed: false,
     })
     setIsDayModalShowing(true)
   }
@@ -154,6 +157,7 @@ export function Calendar() {
         setTasks(prev => prev.map(task => String(task.id) === String(data.id) ? data : task))
         setIsModalShowing(false)
         setSelectedDate(null)
+        setSelectedEvent(null)
       } else {
         console.log("Failed to update Task.")
       }
@@ -187,7 +191,7 @@ export function Calendar() {
 // a custom render function
 function renderEventContent(eventInfo) {
   return (
-    <div className='events'>
+    <div className='events' style={{ color: eventInfo.event.extendedProps.completed ? 'green' : 'red' }}>
       <b>{eventInfo.timeText}</b>
       <i>{eventInfo.event.title}</i>
     </div>
