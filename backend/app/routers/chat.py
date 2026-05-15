@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
-from app.auth import get_current_user
+from app.utils.auth import get_current_user
 from app.models.user import User
 from app.models.task import Task 
 from app.database import get_db 
@@ -8,6 +8,8 @@ from sqlalchemy.orm import Session
 from app.schemas.chats import ChatRequest, ChatResponse
 import httpx 
 import os 
+from app.config import settings
+
 
 router = APIRouter()
 
@@ -30,7 +32,7 @@ async def chat(req: ChatRequest, user: User=Depends(get_current_user), db: Sessi
     response = await client.post(
       "https://api.openai.com/v1/chat/completions",
           headers={
-              "Authorization": f"Bearer {os.getenv('OPENAI_API_KEY')}",
+              "Authorization": f"Bearer {settings.openai_api_key}",
               "Content-Type": "application/json"
           },
           json={
