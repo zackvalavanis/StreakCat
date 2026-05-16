@@ -16,6 +16,8 @@ export function MainPage() {
   const { user } = UseAuth()
   const navigate = useNavigate()
   const [refreshKey, setRefreshKey] = useState(0)
+  const now = new Date()
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
 
 
   useEffect(() => {
@@ -115,12 +117,21 @@ export function MainPage() {
           </div>
         </div>
       )}
-      <h1>Todays Tasks</h1>
-      {tasks.map((task) => (
-        <div className='tasks-container' key={task.id}>
-          <p>{task.task_name} {task.completed ? '✅' : '❌'}</p>
+      {token && user && (
+        <div className='tasks-container'>
+          <h2>Today's Tasks</h2>
+          {tasks.filter(task => String(task.time_start).split('T')[0] === today).length === 0 ? (
+            <p>No tasks today</p>
+          ) : (
+            tasks.map((task) => {
+              const taskDate = String(task.time_start).split('T')[0]
+              return taskDate === today ? (
+                <p key={task.id}>{task.task_name} {task.completed ? '✅' : '❌'}</p>
+              ) : null
+            })
+          )}
         </div>
-      ))}
+      )}
     </div>
   )
 }

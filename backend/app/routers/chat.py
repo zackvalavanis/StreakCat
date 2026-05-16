@@ -70,7 +70,7 @@ tools = [
     'type': 'function', 
     'function': { 
       'name': 'delete_task',
-      'descriptions': 'Delete an existing task in entirety from the schedule',
+      'description': 'Delete an existing task in entirety from the schedule',
       'parameters': { 
         'type': 'object', 
         'properties': { 
@@ -84,13 +84,13 @@ tools = [
     'type': "function", 
     'function': { 
       'name': 'completed_task', 
-      'description': 'Update amn existing task to completed.', 
+      'description': 'Update an existing task to completed.', 
       'parameters': { 
         'type': 'object', 
         'properties': { 
           "completed": {"type": "boolean", "description": "Mark as completed or not (optional)"}
         },
-        'required': ['completed']
+        'required': ['completed', 'task_name']
       }
     }
   },
