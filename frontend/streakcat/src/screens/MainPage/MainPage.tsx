@@ -3,6 +3,7 @@ import { CatMainPage } from "./CatMainPage"
 import './MainPage.css'
 import type { Task } from "../../Types/types"
 import toast from 'react-hot-toast'
+import { UseAuth } from "../../Auth/UseAuth"
 
 export function MainPage() {
   const [tasks, setTasks] = useState<Task[]>([])
@@ -10,6 +11,7 @@ export function MainPage() {
   const [chatHistory, setChatHistory] = useState<{ role: string; content: string }[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const token = localStorage.getItem('access_token')
+  const { user } = UseAuth()
 
 
   useEffect(() => {
@@ -71,16 +73,14 @@ export function MainPage() {
       setIsLoading(false)
     }
   }
+  console.log(chatHistory)
 
   return (
     <div className='main-page'>
       <CatMainPage />
       {token ? (
         <div>
-          <h1>
-            Chat Bot Regarding Your Schedule
-          </h1>
-          <h1>Ask Whiskers about your schedule</h1>
+          <h3 style={{ marginTop: '20px' }}>Hello {user.first_name}, im your personal assistant Whiskers</h3>
         </div>
       ) : (
         <div>
@@ -93,7 +93,7 @@ export function MainPage() {
           <div className="chat-messages">
             {chatHistory.map((msg, i) => (
               <div key={i} className={`chat-bubble ${msg.role}`}>
-                {msg.content}
+                {msg.role == 'user' ? user.first_name : 'Whiskers'} - {msg.content}
               </div>
             ))}
             {isLoading && <div className="chat-bubble assistant">Thinking...</div>}
