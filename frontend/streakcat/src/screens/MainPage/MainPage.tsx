@@ -38,17 +38,56 @@ export function MainPage() {
     handleFetchTasks();
   }, [])
 
-  const handleSend = () => {
-    console.log('sent message')
+  const handleSend = async () => {
+    if (!message.trim()) return
+    if (!token) {
+      toast('Please login first', { id: 'login-toast' })
+      return
+    }
+    const userMessage = { role: 'user', content: message }
+    setChatHistory(prev => [...prev, userMessage])
+    setMessage('')
+    setIsLoading(true)
+
+    try {
+      const res = await fetch('http://localhost:8000/chat', {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: message })
+      })
+      const data = await res.json()
+      if (res.ok) {
+        setChatHistory(prev => [...prev, { role: 'assistant', content: data.reply }])
+      } else {
+        toast.error("Failed to get a response")
+      }
+    } catch (error) {
+      console.error('Chat error', error)
+      toast.error('Something went wrong')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
     <div className='main-page'>
       <CatMainPage />
-      <h1>
-        Chat Bot Regarding Your Schedule
-      </h1>
-      <h1>Ask Whiskers about your schedule</h1>
+      {token ? (
+        <div>
+          <h1>
+            Chat Bot Regarding Your Schedule
+          </h1>
+          <h1>Ask Whiskers about your schedule</h1>
+        </div>
+      ) : (
+        <div>
+          <h1>Log in to ask whiskers about your schedule</h1>
+        </div>
+      )
+      }
       {token && (
         <div className="chat-container">
           <div className="chat-messages">
