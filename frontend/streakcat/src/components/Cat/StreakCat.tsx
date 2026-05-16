@@ -268,7 +268,7 @@ function VeryAngryScene() {
   )
 }
 
-const sceneComponents: Record<MoodKey, () => JSX.Element> = {
+const sceneComponents: Record<MoodKey, () => React.ReactElement> = {
   happy: HappyScene,
   neutral: NeutralScene,
   annoyed: AnnoyedScene,
@@ -285,7 +285,7 @@ export function StreakCat({ moodKey, weeklyCompleted, totalTasksThisWeek, dailyC
       <div style={{ display: 'inline-block' }}>
         <SceneComponent />
       </div>
-      <h2 style={{ margin: '12px 0 4px', fontSize: '20px' }}>{info.label}</h2>
+      <h2 style={{ margin: '19px 0 4px', fontSize: '20px' }}>{info.label}</h2>
       <p style={{ color: '#888', margin: '0 0 4px' }}>{weeklyCompleted}/{totalTasksThisWeek} tasks this week</p>
       <p style={{ color: '#888', margin: 0 }}>{dailyCompleted} completed today</p>
     </div>

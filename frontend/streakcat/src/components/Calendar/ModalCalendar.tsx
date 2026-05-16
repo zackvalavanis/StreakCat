@@ -1,22 +1,14 @@
 import type { ModalCalendarProps } from "../../Types/types"
 import { createPortal } from 'react-dom'
 import './ModalCalendar.css'
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
 export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: ModalCalendarProps) {
   const [isEditing, setIsEditing] = useState(false)
-  const [taskName, setTaskName] = useState('')
+  const [taskName, setTaskName] = useState(info?.title ?? '')
   const [timeStart, setTimeStart] = useState('09:00')
   const [timeEnd, setTimeEnd] = useState('10:00')
-  const [completed, setCompleted] = useState(false)
-
-  useEffect(() => {
-    if (info) {
-      setTaskName(info.title)
-      setCompleted(info.completed ?? false)
-      setIsEditing(false)
-    }
-  }, [info])
+  const [completed, setCompleted] = useState(info?.completed ?? false)
 
   if (!show || !info) {
     return null;

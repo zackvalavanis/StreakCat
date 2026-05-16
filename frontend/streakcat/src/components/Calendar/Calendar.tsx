@@ -181,7 +181,7 @@ export function Calendar() {
         eventClick={handleEventClick}
         dateClick={handleDateClick}
       />
-      <ModalCalendar onDelete={handleDeleteEvent} onClose={handleModalClose} show={isModalShowing} info={selectedEvent} onUpdate={handleUpdateTask}>
+      <ModalCalendar key={selectedEvent?.id ?? 'none'} onDelete={handleDeleteEvent} onClose={handleModalClose} show={isModalShowing} info={selectedEvent} onUpdate={handleUpdateTask}>
       </ModalCalendar>
       <DayModal show={isDayModalShowing} onClose={handleDayModalClose} onSubmit={handleAddTask} date={selectedDate?.date ?? ""}></DayModal>
     </div>

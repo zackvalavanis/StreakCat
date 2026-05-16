@@ -94,7 +94,6 @@ tools = [
       }
     }
   },
-
 ]
 
 def execute_tool(tool_name: str, args: dict, user: User, db: Session): 

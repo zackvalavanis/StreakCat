@@ -4,6 +4,8 @@ import './MainPage.css'
 import type { Task } from "../../Types/types"
 import toast from 'react-hot-toast'
 import { UseAuth } from "../../Auth/UseAuth"
+import ReactMarkdown from 'react-markdown'
+import { useNavigate } from "react-router"
 
 export function MainPage() {
   const [tasks, setTasks] = useState<Task[]>([])
@@ -12,6 +14,8 @@ export function MainPage() {
   const [isLoading, setIsLoading] = useState(false)
   const token = localStorage.getItem('access_token')
   const { user } = UseAuth()
+  const navigate = useNavigate()
+  const [refreshKey, setRefreshKey] = useState(0)
 
 
   useEffect(() => {
@@ -38,7 +42,7 @@ export function MainPage() {
       }
     }
     handleFetchTasks();
-  }, [])
+  }, [refreshKey])
 
   const handleSend = async () => {
     if (!message.trim()) return
@@ -63,6 +67,7 @@ export function MainPage() {
       const data = await res.json()
       if (res.ok) {
         setChatHistory(prev => [...prev, { role: 'assistant', content: data.reply }])
+        setRefreshKey(prev => prev + 1)
       } else {
         toast.error("Failed to get a response")
       }
@@ -73,30 +78,30 @@ export function MainPage() {
       setIsLoading(false)
     }
   }
-  console.log(chatHistory)
 
   return (
     <div className='main-page'>
       <CatMainPage />
-      {token ? (
+      {token && user ? (
         <div>
-          <h3 style={{ marginTop: '20px' }}>Hello {user.first_name}, im your personal assistant Whiskers</h3>
+          <h2 style={{ marginTop: '20px', marginBottom: '20px', fontFamily: 'DM Sans' }}>Hello {user.first_name}, I'm your personal assistant Whiskers</h2>
         </div>
       ) : (
         <div>
-          <h1>Log in to ask whiskers about your schedule</h1>
+          <h2 style={{ marginTop: '20px', marginBottom: '20px', fontFamily: 'DM Sans' }}>Log in to ask Whiskers about your schedule</h2>
+          <button onClick={() => navigate('/login-page')}>Login</button>
         </div>
-      )
-      }
-      {token && (
+      )}
+      {token && user && (
         <div className="chat-container">
           <div className="chat-messages">
             {chatHistory.map((msg, i) => (
-              <div key={i} className={`chat-bubble ${msg.role}`}>
-                {msg.role == 'user' ? user.first_name : 'Whiskers'} - {msg.content}
+              <div style={{ textAlign: 'left' }} key={i} className={`chat-bubble ${msg.role}`}>
+                <strong className='name-bubble'>{msg.role === 'user' ? user.first_name : 'Whiskers'}</strong>
+                <ReactMarkdown>{msg.content}</ReactMarkdown>
               </div>
             ))}
-            {isLoading && <div className="chat-bubble assistant">Thinking...</div>}
+            {isLoading && <div style={{ textAlign: 'left' }} className="chat-bubble assistant"><b>Whiskers Thinking...</b></div>}
           </div>
 
           <div className="chat-input">
@@ -110,6 +115,12 @@ export function MainPage() {
           </div>
         </div>
       )}
+      <h1>Todays Tasks</h1>
+      {tasks.map((task) => (
+        <div className='tasks-container' key={task.id}>
+          <p>{task.task_name} {task.completed ? '✅' : '❌'}</p>
+        </div>
+      ))}
     </div>
   )
 }
