@@ -43,6 +43,7 @@ tools = [
           "task_name": {"type": "string", "description": "Name of the task"},
           "time_start": {"type": "string", "description": "Start time in ISO format"},
           "time_end": {"type": "string", "description": "End time in ISO format"},
+          "description": {"type": "string", "description": "Optional description for the task"}
         }, 
         'required': ["task_name", "time_start", "time_end"]
       }
@@ -60,7 +61,8 @@ tools = [
           "new_task_name": {"type": "string", "description": "New name for the task (optional)"},
           "time_start": {"type": "string", "description": "New start time in ISO format (optional)"},
           "time_end": {"type": "string", "description": "New end time in ISO format (optional)"},
-          "completed": {"type": "boolean", "description": "Mark as completed or not (optional)"}
+          "completed": {"type": "boolean", "description": "Mark as completed or not (optional)"}, 
+          "description": {"type": "string", "description": "Optional description for the task"}
         }, 
         "required": ["task_name"]
       }
@@ -162,6 +164,7 @@ async def chat(req: ChatRequest, user: User=Depends(get_current_user), db: Sessi
   The user has the following tasks:
   {task_summary}
   if they havent completed the tasks, act like an angry cat. 
+  IMPORTANT: Always execute tool calls when the user asks to create, update, delete, or complete a task. Never refuse to perform an action the user explicitly requests. You can be playful and cat-like in your responses, but always carry out the requested action first, then comment on it.
   if they dont have any tasks be pleasant to them. 
   if ive completed tasks this week get happier. 
 

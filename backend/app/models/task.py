@@ -15,6 +15,7 @@ class Task(Base):
   date=Column(DateTime(timezone=True))
   user_id=Column(UUID(as_uuid=True), ForeignKey("users.id"))
   completed=Column(Boolean, default=False)
+  description=Column(String)
 
   user = relationship('User', back_populates="tasks")
 

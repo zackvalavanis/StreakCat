@@ -1,23 +1,158 @@
 .calendar-page {
   margin-bottom: 30px;
+  font-family: 'DM Sans', sans-serif;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
+/* Calendar container */
 .fc {
   position: relative;
   z-index: 1;
-  cursor: crosshair
+  background-color: #1e1e2e;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
 }
 
+/* Month title */
+.fc .fc-toolbar-title {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: #e4e4e7;
+}
+
+/* Nav buttons */
+.fc .fc-button {
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  transition: background-color 0.2s ease;
+}
+
+.fc .fc-button:hover {
+  background-color: #2563eb;
+}
+
+.fc .fc-button-active {
+  background-color: #2563eb;
+}
+
+.fc .fc-button:focus {
+  box-shadow: none;
+}
+
+/* Day header (Mon, Tue, etc) */
+.fc .fc-col-header-cell {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.fc .fc-col-header-cell-cushion {
+  color: #a1a1aa;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 10px 0;
+  text-decoration: none;
+}
+
+/* Day numbers */
+.fc .fc-daygrid-day-number {
+  color: #a1a1aa;
+  font-size: 13px;
+  padding: 8px 10px;
+  text-decoration: none;
+}
+
+/* Day cells */
+.fc .fc-daygrid-day {
+  border-color: rgba(255, 255, 255, 0.06);
+  transition: background-color 0.15s ease;
+  cursor: crosshair;
+}
+
+.fc .fc-daygrid-day:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+/* Today highlight */
+.fc .fc-day-today {
+  background-color: rgba(59, 130, 246, 0.08) !important;
+}
+
+.fc .fc-day-today .fc-daygrid-day-number {
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+/* Events */
 .fc .fc-daygrid-day-events {
   max-height: 130px;
   overflow-y: auto;
+  padding: 0 4px;
+}
+
+.fc .fc-daygrid-day-events::-webkit-scrollbar {
+  width: 3px;
+}
+
+.fc .fc-daygrid-day-events::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
 }
 
 .fc .fc-daygrid-event {
   white-space: normal;
   word-wrap: break-word;
+  border-radius: 6px;
+  padding: 3px 8px;
+  margin-bottom: 2px;
+  font-size: 13px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
+/* Borders */
+.fc .fc-scrollgrid {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.fc th,
+.fc td {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Other month days */
+.fc .fc-day-other .fc-daygrid-day-number {
+  color: #52525b;
+}
+
+/* Event content */
 .events {
   cursor: pointer;
+  transition: opacity 0.2s ease;
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.4;
+}
+
+.events:hover {
+  opacity: 0.8;
+}
+
+.events b {
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.events i {
+  font-style: normal;
+  font-weight: 400;
 }

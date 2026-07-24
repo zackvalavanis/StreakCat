@@ -47,7 +47,7 @@ export function Cat({ events }: CatProps) {
         totalTasksThisWeek={totalTasksThisWeek}
         dailyCompleted={dailyCompleted}
       />
-      <p style={{ paddingBottom: '2rem' }}>
+      <p style={{ paddingBottom: '2rem', color: 'white' }}>
         Make Whiskers happy by completing your tasks.
       </p>
     </div>

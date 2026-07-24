@@ -36,18 +36,26 @@
   color: #000000;
 }
 
-
-
 .form button {
   cursor: pointer;
-  height: 35px;
+  height: 40px;
   margin: 0 auto;
-  border-radius: 20px;
+  border-radius: 10px;
   width: 80%;
-  background-color: rgb(129, 175, 99);
+  background-color: #3b82f6;
+  color: white;
   border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .form button:hover {
-  background-color: black;
+  background-color: #2563eb;
+}
+
+.form button:active {
+  transform: scale(0.98);
 }

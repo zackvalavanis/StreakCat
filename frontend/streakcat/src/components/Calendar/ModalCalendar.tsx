@@ -9,6 +9,7 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
   const [timeStart, setTimeStart] = useState('09:00')
   const [timeEnd, setTimeEnd] = useState('10:00')
   const [completed, setCompleted] = useState(info?.completed ?? false)
+  const [description, setDescription] = useState('')
 
   if (!show || !info) {
     return null;
@@ -50,6 +51,7 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
     setTimeStart(`${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}`)
     setTimeEnd(`${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}`)
     setCompleted(info.completed ?? false)
+    setDescription(info.description ?? '')
     console.log('editing')
     setIsEditing(true)
   }
@@ -60,6 +62,7 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
     setTimeStart('09:00')
     setTimeEnd('10:00')
     setCompleted(false)
+    setDescription('')
     onClose()
   }
 
@@ -72,19 +75,29 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
             <input type='time' onChange={(e) => setTimeStart(e.target.value)} value={timeStart} placeholder="start time"></input>
             <input type='time' onChange={(e) => setTimeEnd(e.target.value)} value={timeEnd} placeholder='end time'></input>
             <input type='date' value={time} placeholder="date" readOnly></input>
-            <input
-              type='checkbox'
-              checked={completed}
-              onChange={(e) => setCompleted(e.target.checked)}>
-            </input>
+            <label>
+              <input
+                type='checkbox'
+                checked={completed}
+                onChange={(e) => setCompleted(e.target.checked)}>
+              </input>
+              Completed
+            </label>
+            <textarea
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
+              placeholder="Description (optional)"
+              rows={3}
+            />
             <button className='close-btn' onClick={handleClose}>X</button>
-            <button onClick={() => onUpdate({
+            <button className='update-btn' onClick={() => onUpdate({
               id: info.id,
               task_name: taskName,
               time_start: `${isoDate}T${timeStart}:00${tzOffset}`,
               time_end: `${isoDate}T${timeEnd}:00${tzOffset}`,
               date: `${isoDate}T${timeStart}:00${tzOffset}`,
-              completed: completed
+              completed: completed,
+              description: description
             })}
             >Update
             </button>
@@ -95,6 +108,9 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
             <p>{configure_date}</p>
             <p>{time} {cleaned_time_zone(time_zone_cleaned)}</p>
             <button className='close-btn' onClick={handleClose}>X</button>
+            <p>{configure_date}</p>
+            <p>{time} {cleaned_time_zone(time_zone_cleaned)}</p>
+            {info.description && <p>{info.description}</p>}
             <button className='delete-btn' onClick={() => onDelete(info.id)}>Delete</button>
             <button className='edit-btn' onClick={handleEdit}>Edit</button>
           </div>

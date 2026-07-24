@@ -6,7 +6,6 @@ import { useNavigate } from "react-router"
 export function ProfilePage() {
   const { user } = UseAuth()
   const navigate = useNavigate()
-  console.log("User: ", user)
 
   if (!user) {
     navigate('/')
@@ -14,12 +13,20 @@ export function ProfilePage() {
 
   return (
     <div className='profile-page'>
-      <h1>
-        {/* Welcome {user.first_name} */}
-      </h1>
       <div className='calendar-container'>
         <div className='calendar'>
-          <Calendar />
+          {user ? (
+            <div>
+              <h1 style={{ color: 'White', letterSpacing: '.05px' }}>
+                {user.first_name}'s Schedule
+              </h1>
+              <Calendar />
+            </div>
+          ) : (
+            <div>
+              <h1>Loading...</h1>
+            </div>
+          )}
         </div>
       </div>
     </div>

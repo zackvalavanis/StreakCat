@@ -10,6 +10,7 @@ class TaskResponse(BaseModel):
   time_end: datetime
   date: datetime | None = None
   completed: bool = False
+  description: str | None = None
 
   class Config:
     from_attributes = True
@@ -20,5 +21,6 @@ class TaskCreate(BaseModel):
   time_end: datetime
   date: datetime | None = None
   completed: bool  = False
+  description: str | None = None
 
 

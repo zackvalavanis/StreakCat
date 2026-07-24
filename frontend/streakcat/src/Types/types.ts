@@ -25,13 +25,14 @@ export interface Task {
   time_start: DateInput
   time_end: DateInput
   completed: boolean
+  description: string
 }
 
 export type ModalCalendarProps = {
   show: boolean
   onClose: () => void
   onDelete: (id: string) => void
-  onUpdate: (task: { id: string, task_name: string; time_start: string; time_end: string; date: string, completed: boolean }) => void
+  onUpdate: (task: { id: string, task_name: string; time_start: string; time_end: string; date: string, completed: boolean, description: string }) => void
   info: {
     id: string
     title: string
@@ -39,6 +40,7 @@ export type ModalCalendarProps = {
     completed: boolean
     time_start: string
     time_end: string
+    description: string
   } | null
 
 }
@@ -46,7 +48,7 @@ export type ModalCalendarProps = {
 export interface DayModalProps {
   show: boolean
   onClose: () => void
-  onSubmit: (task: { task_name: string; time_start: string; time_end: string; date: string, completed: boolean }) => void
+  onSubmit: (task: { task_name: string; time_start: string; time_end: string; date: string, completed: boolean, description: string }) => void
   date: string
 }
 
@@ -57,6 +59,7 @@ export type SelectedEvent = {
   completed: boolean
   time_start: string
   time_end: string
+  description: string
 }
 
 export type SelectedDate = {

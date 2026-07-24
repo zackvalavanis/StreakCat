@@ -2,6 +2,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,30 +11,82 @@
 
 .modal-content-day {
   position: relative;
-  background: white;
-  border-radius: 8px;
-  padding: 24px;
-  min-width: 300px;
-  max-width: 500px;
-  min-height: 300px;
+  background: #1e1e2e;
+  border-radius: 16px;
+  padding: 32px;
+  min-width: 340px;
+  max-width: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  font-family: 'DM Sans', sans-serif;
 }
 
-.modal-content-day h1 {
-  margin: 0 0 12px 0;
-  font-size: 1.25rem;
+.modal-content-day form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.modal-content-day p {
-  margin: 0;
+.modal-content-day input {
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #16161e;
+  color: #e4e4e7;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.modal-content-day input:focus {
+  border-color: #3b82f6;
+}
+
+.modal-content-day input::placeholder {
+  color: #6b6b80;
+}
+
+.modal-content-day input[type="time"],
+.modal-content-day input[type="date"] {
+  color-scheme: dark;
+}
+
+.add-btn {
+  height: 42px;
+  border-radius: 10px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.add-btn:hover {
+  background: #2563eb;
+}
+
+.add-btn:active {
+  transform: scale(0.98);
 }
 
 .close-btn {
   position: absolute;
-  top: 8px;
-  right: 12px;
+  top: 12px;
+  right: 16px;
   border: none;
-  background-color: transparent;
-  color: black;
-  font-size: 30px;
+  background: transparent;
+  color: #a1a1aa;
+  font-size: 20px;
   cursor: pointer;
+  transition: color 0.2s ease;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: #e4e4e7;
 }

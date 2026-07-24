@@ -19,13 +19,13 @@ export function Calendar() {
   const [selectedEvent, setSelectedEvent] = useState<SelectedEvent | null>(null)
   const [selectedDate, setSelectedDate] = useState<SelectedDate | null>(null)
   const [isDayModalShowing, setIsDayModalShowing] = useState(false)
-
+  const api = import.meta.env.VITE_BACKEND_API
 
   useEffect(() => {
     const HandleFetchTasks = async () => {
       const token = localStorage.getItem('access_token')
       try {
-        const res = await fetch('http://localhost:8000/tasks/me', {
+        const res = await fetch(`${api}/tasks/me`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }
@@ -64,8 +64,8 @@ export function Calendar() {
       date: info.event.start,
       completed: task?.completed ?? false,
       time_start: String(task?.time_start ?? ''),
-      time_end: String(task?.time_end ?? '')
-
+      time_end: String(task?.time_end ?? ''),
+      description: task?.description ?? ''
     })
     setIsModalShowing(true)
   }
@@ -86,7 +86,7 @@ export function Calendar() {
   const handleDeleteEvent = async (id: string) => {
     const token = localStorage.getItem('access_token')
     try {
-      const res = await fetch(`http://localhost:8000/tasks/me/${id}`, {
+      const res = await fetch(`${api}/tasks/me/${id}`, {
         method: 'DELETE',
         headers: {
           "Authorization": `Bearer ${token}`
@@ -118,7 +118,7 @@ export function Calendar() {
   const handleAddTask = async (task: { task_name: string; time_start: string; time_end: string; date: string, completed: boolean }) => {
     const token = localStorage.getItem('access_token')
     try {
-      const res = await fetch('http://localhost:8000/tasks/me', {
+      const res = await fetch(`${api}/tasks/me`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -144,7 +144,7 @@ export function Calendar() {
     const { id, ...body } = task
     console.log(body)
     try {
-      const res = await fetch(`http://localhost:8000/tasks/me/${id}`, {
+      const res = await fetch(`${api}/tasks/me/${id}`, {
         method: "PUT",
         headers: {
           "Authorization": `Bearer ${token}`,

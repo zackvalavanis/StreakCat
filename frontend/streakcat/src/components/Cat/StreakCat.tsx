@@ -285,9 +285,9 @@ export function StreakCat({ moodKey, weeklyCompleted, totalTasksThisWeek, dailyC
       <div style={{ display: 'inline-block' }}>
         <SceneComponent />
       </div>
-      <h2 style={{ margin: '19px 0 4px', fontSize: '20px' }}>{info.label}</h2>
-      <p style={{ color: '#888', margin: '0 0 4px' }}>{weeklyCompleted}/{totalTasksThisWeek} tasks this week</p>
-      <p style={{ color: '#888', margin: 0 }}>{dailyCompleted} completed today</p>
+      <h2 style={{ margin: '19px 0 4px', fontSize: '20px', color: 'white' }}>{info.label}</h2>
+      <p style={{ margin: '0 0 4px', color: 'white' }}>{weeklyCompleted}/{totalTasksThisWeek} tasks this week</p>
+      <p style={{ color: 'white', margin: 0 }}>{dailyCompleted} completed today</p>
     </div>
   )
 }

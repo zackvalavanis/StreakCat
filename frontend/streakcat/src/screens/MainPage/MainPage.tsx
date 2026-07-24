@@ -18,6 +18,7 @@ export function MainPage() {
   const [refreshKey, setRefreshKey] = useState(0)
   const now = new Date()
   const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
+  const api = import.meta.env.VITE_BACKEND_API
 
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export function MainPage() {
     }
     const handleFetchTasks = async () => {
       try {
-        const res = await fetch(`http://localhost:8000/tasks/me`, {
+        const res = await fetch(`${api}/tasks/me`, {
           method: "GET",
           headers: {
             "Authorization": `Bearer ${token}`
@@ -46,6 +47,16 @@ export function MainPage() {
     handleFetchTasks();
   }, [refreshKey])
 
+
+  useEffect(() => {
+    if (token && user) {
+      setChatHistory([{
+        role: 'assistant',
+        content: `Hello ${user.first_name}, I'm your personal assistant Whiskers 🐱 Ask me anything about your tasks and schedule!`
+      }])
+    }
+  }, [user])
+
   const handleSend = async () => {
     if (!message.trim()) return
     if (!token) {
@@ -58,7 +69,7 @@ export function MainPage() {
     setIsLoading(true)
 
     try {
-      const res = await fetch('http://localhost:8000/chat', {
+      const res = await fetch(`${api}/chat`, {
         method: "POST",
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -86,12 +97,12 @@ export function MainPage() {
       <CatMainPage />
       {token && user ? (
         <div>
-          <h2 style={{ marginTop: '20px', marginBottom: '20px', fontFamily: 'DM Sans' }}>Hello {user.first_name}, I'm your personal assistant Whiskers</h2>
+
         </div>
       ) : (
         <div>
           <h2 style={{ marginTop: '20px', marginBottom: '20px', fontFamily: 'DM Sans' }}>Log in to ask Whiskers about your schedule</h2>
-          <button onClick={() => navigate('/login-page')}>Login</button>
+          <button className='btn-login' onClick={() => navigate('/login-page')}>Login</button>
         </div>
       )}
       {token && user && (
