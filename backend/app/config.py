@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings
 CORS_ORIGINS = [
     "http://localhost:5173",
     "http://localhost:5174",
-    "https://streak-cat-azure.vercel.app/login-page",
+    "https://streak-cat-azure.vercel.app",
 ]
 
 
