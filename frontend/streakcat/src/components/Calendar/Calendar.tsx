@@ -5,7 +5,7 @@ import type { Task } from '../../Types/types'
 import interactionPlugin from "@fullcalendar/interaction"
 import { ModalCalendar } from './ModalCalendar'
 import type { SelectedEvent } from '../../Types/types'
-import type { EventClickArg } from '@fullcalendar/core'
+import type { EventClickArg, EventContentArg } from '@fullcalendar/core'
 import './Calendar.css'
 import { DayModal } from './DayModal'
 import type { SelectedDate } from '../../Types/types'
@@ -80,7 +80,6 @@ export function Calendar() {
     setIsDayModalShowing(false)
     setSelectedDate(null)
   }
-
 
 
   const handleDeleteEvent = async (id: string) => {
@@ -189,7 +188,7 @@ export function Calendar() {
 }
 
 // a custom render function
-function renderEventContent(eventInfo) {
+function renderEventContent(eventInfo: EventContentArg) {
   return (
     <div className='events' style={{ color: eventInfo.event.extendedProps.completed ? 'green' : 'red' }}>
       <b>{eventInfo.timeText}</b>

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router"
 export function MainPage() {
   const [tasks, setTasks] = useState<Task[]>([])
   const [message, setMessage] = useState('')
-  const [chatHistory, setChatHistory] = useState<{ role: string; content: string }[]>([])
+  const [chatHistory, setChatHistory] = useState<{ role: string; content: string }[]>(() => [])
   const [isLoading, setIsLoading] = useState(false)
   const token = localStorage.getItem('access_token')
   const { user } = UseAuth()
@@ -49,13 +49,13 @@ export function MainPage() {
 
 
   useEffect(() => {
-    if (token && user) {
+    if (token && user && chatHistory.length === 0) {
       setChatHistory([{
         role: 'assistant',
         content: `Hello ${user.first_name}, I'm your personal assistant Whiskers 🐱 Ask me anything about your tasks and schedule!`
       }])
     }
-  }, [user])
+  }, [token, user, chatHistory.length])
 
   const handleSend = async () => {
     if (!message.trim()) return

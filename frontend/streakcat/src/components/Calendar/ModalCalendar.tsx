@@ -26,22 +26,21 @@ export function ModalCalendar({ info, show, onClose, onDelete, onUpdate }: Modal
   const minutes = String(absMinutes % 60).padStart(2, '0')
   const tzOffset = `${sign}${hours}:${minutes}`
 
-  const time_zone = info.date?.toString().split(' ').slice(6).join(' ')
+  const time_zone = info.date ? info.date.toString().split(' ').slice(6).join(' ') : ''
   const time_zone_cleaned = time_zone
-    .split(' ')
-    .join(' ')
     .replace(/[()]/g, '')
+    .trim()
 
-  const cleaned_time_zone = (time_zone_cleaned) => {
-    const letters = time_zone_cleaned.split(' ')
-    const arr = []
+  const cleaned_time_zone = (tz: string) => {
+    if (!tz) return ''
+    const letters = tz.split(' ')
+    const arr: string[] = []
 
     for (let i = 0; i < letters.length; i++) {
-      arr.push(letters[i][0])
+      if (letters[i]) arr.push(letters[i][0])
     }
-    return arr.join('');
+    return arr.join('')
   }
-  console.log(time_zone_cleaned)
 
 
   const handleEdit = () => {
