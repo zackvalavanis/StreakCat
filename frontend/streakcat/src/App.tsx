@@ -7,6 +7,7 @@ import { LoginPage } from './screens/LoginPage/LoginPage'
 import { AuthProvider } from './Auth/AuthProvider'
 import { Toaster } from 'react-hot-toast'
 import { ProfilePage } from './screens/ProfilePage/ProfilePage'
+import { SignUp } from './screens/SignUp/SignUpPage'
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <MainPage /> },
       { path: '/login-page', element: <LoginPage /> },
-      { path: '/profile', element: <ProfilePage /> }
+      { path: '/profile', element: <ProfilePage /> },
+      { path: '/singup-page', element: <SignUp /> }
     ]
   }
 ])

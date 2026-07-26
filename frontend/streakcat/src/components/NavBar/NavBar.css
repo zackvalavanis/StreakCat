@@ -6,7 +6,8 @@
   background-color: #1a1a2e;
 }
 
-.nav-bar-links {
+.nav-bar-links,
+.links-log {
   display: flex;
   font-size: 25px;
   gap: 150px;
@@ -18,4 +19,8 @@
 .link3:hover,
 .link4:hover {
   transform: scale(1.05);
+}
+
+.links-log {
+  display: flex;
 }

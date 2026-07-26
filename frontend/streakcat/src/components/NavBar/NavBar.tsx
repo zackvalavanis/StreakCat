@@ -17,9 +17,13 @@ export function NavBar() {
           <div className='nav-bar-links'>
             <Link className='link1' to='/profile'>Profile</Link>
             <Link className='link2' to="/" onClick={handleLogout}>Logout</Link>
+
           </div>
         ) : (
-          <Link className='link3' to='/login-page'>Login</Link>
+          <div className='links-log'>
+            <Link className='link3' to='/login-page'>Login</Link>
+            <Link className='link4' to="/singup-page" >Sign Up</Link>
+          </div>
         )}
       </div>
 
