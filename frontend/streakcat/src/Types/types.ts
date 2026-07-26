@@ -11,6 +11,13 @@ export interface LoginPage {
   password: string
 }
 
+export interface SignUp {
+  first_name: string
+  last_name: string
+  email: string
+  password: string
+}
+
 export interface AuthContextType {
   token: string | null
   login: (token: string) => Promise<void>
