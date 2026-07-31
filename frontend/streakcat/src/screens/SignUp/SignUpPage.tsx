@@ -38,8 +38,7 @@ export function SignUpPage() {
         alert("Could not create user, please try again...")
         return
       } else {
-        const data = await res.json();
-        alert("User Creted!")
+        alert("User Created!")
       }
     } catch (error) {
       console.error("Error", error)
