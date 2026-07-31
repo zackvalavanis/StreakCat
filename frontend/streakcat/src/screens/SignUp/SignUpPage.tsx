@@ -142,6 +142,11 @@ export function SignUpPage() {
 
           <button type='button' onClick={() => setShowPassword(!showPassword)}>{showPassword ? "Hide" : "Show Password"}</button>
 
+          {error && (
+            <p className='form-error' style={{ color: '#d33', margin: '4px 0' }}>
+              {error}
+            </p>
+          )}
           <button type='submit' disabled={loading}>{loading ? "Signing Up..." : "Sign Up"}</button>
         </form>
       </div>
