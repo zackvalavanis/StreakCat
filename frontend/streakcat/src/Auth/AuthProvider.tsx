@@ -6,6 +6,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState<string | null>(localStorage.getItem('access_token'))
   const [isLoading, setIsLoading] = useState(true)
+  const api = import.meta.env.VITE_BACKEND_API
 
 
   useEffect(() => {
@@ -16,7 +17,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       try {
-        const res = await fetch('http://localhost:8000/users/me', {
+        const res = await fetch(`${api}/users/me`, {
           headers: {
             "Authorization": `Bearer ${token}`
           }
